@@ -3,20 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的第一個網站</title>
-    <link rel="stylesheet" href="style.css">
+    <title>抽獎網頁</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        h1 {
+            color: #0078d4;
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #0078d4;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #005bb5;
+        }
+        .winner {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #28a745;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>歡迎來到我的網站</h1>
-    </header>
-    <main>
-        <p>這是我第一次建立的網站，感覺好棒！</p>
-        <button id="clickMe">按我一下</button>
-    </main>
-    <footer>
-        <p>版權所有 © 2024</p>
-    </footer>
+    <h1>抽獎系統</h1>
+    <p>請輸入參加者名單，每行一個名字：</p>
+    <textarea id="participants" placeholder="例如：\n小明\n小華\n小美"></textarea><br>
+    <button id="drawButton">抽獎</button>
+    <p class="winner" id="winner"></p>
+
     <script src="script.js"></script>
 </body>
 </html>
