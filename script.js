@@ -1,19 +1,52 @@
-// 抽獎按鈕與結果顯示
-document.getElementById('drawButton').addEventListener('click', function() {
-    // 獲取輸入的參加者名單
-    const participantsText = document.getElementById('participants').value;
-    const participants = participantsText.split('\n').filter(name => name.trim() !== '');
+document.getElementById('fetchComments').addEventListener('click', async function() {
+    const postUrl = document.getElementById('postUrl').value;
+    const winnerDiv = document.getElementById('winner');
 
-    // 檢查是否有參加者
-    if (participants.length === 0) {
-        alert('請輸入至少一位參加者！');
+    if (!postUrl) {
+        winnerDiv.textContent = '請輸入 Instagram 貼文網址！';
         return;
     }
 
-    // 隨機選取一位得獎者
-    const winnerIndex = Math.floor(Math.random() * participants.length);
-    const winner = participants[winnerIndex];
+    try {
+        // 解析貼文 ID
+        const postId = extractPostId(postUrl);
+        if (!postId) {
+            winnerDiv.textContent = '無效的貼文網址！';
+            return;
+        }
 
-    // 顯示得獎者
-    document.getElementById('winner').textContent = `恭喜得獎者：${winner}`;
+        // 獲取 Access Token
+        const accessToken = '你的 Instagram API Access Token';
+
+        // 使用 Instagram API 獲取評論
+        const comments = await fetchComments(postId, accessToken);
+        if (comments.length === 0) {
+            winnerDiv.textContent = '貼文無評論！';
+            return;
+        }
+
+        // 隨機抽選一位得獎者
+        const winner = comments[Math.floor(Math.random() * comments.length)];
+        winnerDiv.textContent = `恭喜得獎者：${winner}`;
+    } catch (error) {
+        console.error(error);
+        winnerDiv.textContent = '抽獎過程出錯，請稍後再試！';
+    }
 });
+
+// 解析 Instagram 貼文 ID
+function extractPostId(url) {
+    const regex = /https:\/\/www.instagram.com\/p\/([^\/?]+)/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+}
+
+// 使用 Instagram API 獲取評論
+async function fetchComments(postId, accessToken) {
+    const apiUrl = `https://graph.facebook.com/v15.0/${postId}/comments?access_token=${accessToken}`;
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+
+    if (!data || !data.data) throw new Error('無法獲取評論');
+    return data.data.map(comment => comment.from.name);
+}

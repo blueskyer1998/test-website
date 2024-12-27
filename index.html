@@ -3,28 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>抽獎網頁</title>
+    <title>Instagram 抽獎工具</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #f9f9f9;
             padding: 20px;
+            background-color: #f4f4f9;
         }
-        h1 {
-            color: #0078d4;
-        }
-        textarea {
-            width: 80%;
-            height: 100px;
-            margin-bottom: 20px;
+        input {
+            width: 60%;
+            padding: 10px;
+            margin: 10px 0;
         }
         button {
             background-color: #0078d4;
             color: white;
             padding: 10px 20px;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
         }
@@ -33,18 +29,18 @@
         }
         .winner {
             margin-top: 20px;
-            font-size: 24px;
+            font-size: 20px;
             color: #28a745;
         }
     </style>
 </head>
 <body>
-    <h1>抽獎系統</h1>
-    <p>請輸入參加者名單，每行一個名字：</p>
-    <textarea id="participants" placeholder="例如：\n小明\n小華\n小美"></textarea><br>
-    <button id="drawButton">抽獎</button>
-    <p class="winner" id="winner"></p>
-
+    <h1>Instagram 抽獎工具</h1>
+    <p>輸入 Instagram 貼文網址，然後抽出一位幸運評論者！</p>
+    <input type="text" id="postUrl" placeholder="貼文網址，例如 https://www.instagram.com/p/xxx">
+    <br>
+    <button id="fetchComments">抽獎</button>
+    <div class="winner" id="winner"></div>
     <script src="script.js"></script>
 </body>
 </html>
