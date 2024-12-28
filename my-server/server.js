@@ -45,3 +45,30 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`伺服器已啟動，監聽端口 ${PORT}`);
 });
+
+
+app.get('/redirect', (req, res) => {
+    const code = req.query.code; // Instagram 返回的授權碼
+    if (code) {
+        console.log(`收到授權碼: ${code}`);
+        res.send('授權成功，請檢查伺服器日誌中的授權碼！');
+    } else {
+        console.log('授權失敗');
+        res.send('授權失敗，請稍後重試！');
+    }
+});
+
+app.post('/unauthorize', (req, res) => {
+    const userId = req.body.user_id; // Instagram 發送的用戶 ID
+    console.log(`用戶 ${userId} 撤銷了授權`);
+    res.status(200).send('取消授權已接收');
+});
+
+app.post('/delete-data', (req, res) => {
+    const userId = req.body.user_id; // Instagram 發送的用戶 ID
+    console.log(`收到資料刪除請求，來自用戶: ${userId}`);
+    res.status(200).send({
+        status: 'success',
+        confirmation_code: 'data_deleted_successfully'
+    });
+});
